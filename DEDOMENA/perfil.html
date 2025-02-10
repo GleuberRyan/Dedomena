@@ -63,13 +63,10 @@ function editCharacter(id) {
 
     function deleteCharacter(id) {
     if (confirm("Tem certeza que deseja excluir essa ficha?")) {
-        // Filtra os personagens, removendo aquele que tem o ID correspondente
         characters = characters.filter(character => character.id !== id);
 
-        // Atualiza o localStorage
         localStorage.setItem("characters", JSON.stringify(characters));
 
-        // Atualiza a lista de personagens na tela
         renderCharacters();
     }
 }
