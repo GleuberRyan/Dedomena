@@ -34,7 +34,9 @@ h1{
     color: white;
     display:flex;
     align-items: center;
-    justify-content: center;
+    justify-content: right;
+    margin-top: 20%;
+    margin-right: 10%;
 }
 
 h3{
@@ -96,4 +98,5 @@ form button:hover {
 .itens_direita{
     margin-left: auto; 
 }
+
 
