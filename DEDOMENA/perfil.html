@@ -5,81 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
     <link rel="stylesheet" href="perfil.css">
-    <header>
-        <a href="home.html"><h1>DEDOMÉNA</h1></a>
-        <div class="itens_esquerda"><a href="login.html"><h3> Login </h3></a>
-            <a href="criarconta.html"><h3> Criar conta </h3></a>
-            <a href="perfil.html"><h3> Perfil </h3></a>
-          </div>
-    </header>
-     
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.min.js"></script>
 </head>
 <body>
-    <div class="perfil"><h1>Área de Perfil</h1></div>
-        <br>
-<div class="perfil"><p>Bem-vindo ao seu perfil, <span id="userName"></span>!</p></div>
-<div class="perfil"><button id="logoutBtn">Sair</button></div>
+
+<header>
+    <a href="home.html"><h1>DEDOMÉNA</h1></a>
+    <div class="itens_esquerda">
+        <a href="login.html"><h3> Login </h3></a>
+        <a href="criarconta.html"><h3> Criar conta </h3></a>
+        <a href="perfil.html"><h3> Perfil </h3></a>
+    </div>
+</header>
+
+<div class="perfil">
+    <h1>Área de Perfil</h1>
+    <p>Bem-vindo ao seu perfil, <span id="userName"></span>!</p>
+    <button id="logoutBtn">Sair</button>
+</div>
+
 <h2>Lista de Fichas</h2>
 <div class="fichacontainer">
     <ul id="characterList"></ul>
-
     <button onclick="window.location.href='criarficha.html'">Adicionar mais fichas</button>
-
-    <script>
-         let characters = JSON.parse(localStorage.getItem("characters")) || [];
-    const characterList = document.getElementById("characterList");
-
-    function renderCharacters() {
-    characterList.innerHTML = ""; 
-
-    characters.forEach(character => {
-        const characterItem = document.createElement("li");
-        characterItem.innerHTML = `
-            <strong>${character.name}</strong><br>
-            Classe: ${character.class}<br>
-            Nex: ${character.nex}<br>
-            Nível: ${character.level}<br>
-            Habilidades: ${character.abilities}<br>
-            <br><strong>Atributos:</strong><br>
-            Agilidade: ${character.agility}<br>
-            Força: ${character.strength}<br>
-            Intelecto: ${character.intelligence}<br>
-            Presença: ${character.presence}<br>
-            Vigor: ${character.vigor}<br>
-
-            <button onclick="editCharacter(${character.id})">Editar</button>
-            <button onclick="deleteCharacter(${character.id})">Excluir</button>
-        `;
-        characterList.appendChild(characterItem);
-    });
-}
-
-    
-
-function editCharacter(id) {
-    window.location.href = `editar.html?id=${id}`;
-}
-
-
-    function deleteCharacter(id) {
-    if (confirm("Tem certeza que deseja excluir essa ficha?")) {
-        characters = characters.filter(character => character.id !== id);
-
-        localStorage.setItem("characters", JSON.stringify(characters));
-
-        renderCharacters();
-    }
-}
-
-
-    renderCharacters();
-    </script>
 </div>
-<br>
+
+<script id="character-template" type="text/x-handlebars-template">
+    {{#each characters}}
+        <li>
+            <strong>{{name}}</strong><br>
+            Classe: {{class}}<br>
+            Nex: {{nex}}<br>
+            Nível: {{level}}<br>
+            Habilidades: {{abilities}}<br>
+            <br><strong>Atributos:</strong><br>
+            Agilidade: {{agility}}<br>
+            Força: {{strength}}<br>
+            Intelecto: {{intelligence}}<br>
+            Presença: {{presence}}<br>
+            Vigor: {{vigor}}<br>
+            <button onclick="editCharacter({{id}})">Editar</button>
+            <button onclick="deleteCharacter({{id}})">Excluir</button>
+        </li>
+    {{/each}}
+</script>
+
 <h2>Rolagem de dados</h2>
 <div class="dadoscontainer">
-
-
     <label for="diceType">Escolha o dado:</label>
     <select id="diceType">
         <option value="6">D6</option>
@@ -91,11 +63,9 @@ function editCharacter(id) {
     </select>
 
     <br><br>
-
     <button onclick="rolardado()">Rolar Dados</button>
-
     <div id="result"></div>
-    </div>
+</div>
 
 <script src="perfil.js"></script>
 
